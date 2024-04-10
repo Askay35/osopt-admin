@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
@@ -20,44 +21,53 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('categories', ["rows" => Category::all()->toArray(), "table" => Category::tableName(), "columns" => Category::tableColumns()]);
-});
 
-Route::prefix("categories")->group(function () {
-    Route::post('/', function (Request $request) {
-        Category::create(["name" => $request->post('name')]);
-        return redirect()->back();
-    });
-    Route::post('/edit/{id}', [AdminPageController::class, "edit"])->where('id', '[0-9]+');
-
-});
-Route::prefix("subcategories")->group(function () {
+Route::middleware('auth')->group(function () {
 
     Route::get('/', function () {
-        return view('subcategories', ["categories"=>Category::all(),"rows" => Subcategory::all()->toArray(), "table" => Subcategory::tableName(), "columns" => Subcategory::tableColumns()]);
+        return view('categories', ["rows" => Category::all()->toArray(), "table" => Category::tableName(), "columns" => Category::tableColumns()]);
     });
-    Route::post('/', function () {
-        $data = request()->post();
-        Subcategory::create([
-            "category_id" => $data['category_id'],
-            "name" => $data['name'],
-        ]);
-        return redirect()->back();
-    });
-    Route::post('/edit/{id}', [AdminPageController::class, "edit"])->where('id', '[0-9]+');
-});
-Route::prefix("orders")->group(function () {
 
-    Route::get('/', function () {
-        return view('orders', ["rows" => Order::all()->toArray(), "table" => Order::tableName(), "columns" => Order::tableColumns()]);
+    Route::prefix("categories")->group(function () {
+        Route::post('/', function (Request $request) {
+            Category::create(["name" => $request->post('name')]);
+            return redirect()->back();
+        });
+        Route::post('/edit/{id}', [AdminPageController::class, "edit"])->where('id', '[0-9]+');
     });
+    Route::prefix("subcategories")->group(function () {
+
+        Route::get('/', function () {
+            return view('subcategories', ["categories" => Category::all(), "rows" => Subcategory::all()->toArray(), "table" => Subcategory::tableName(), "columns" => Subcategory::tableColumns()]);
+        });
+        Route::post('/', function () {
+            $data = request()->post();
+            Subcategory::create([
+                "category_id" => $data['category_id'],
+                "name" => $data['name'],
+            ]);
+            return redirect()->back();
+        });
+        Route::post('/edit/{id}', [AdminPageController::class, "edit"])->where('id', '[0-9]+');
+    });
+    Route::prefix("orders")->group(function () {
+
+        Route::get('/', function () {
+            return view('orders', ["rows" => Order::all()->toArray(), "table" => Order::tableName(), "columns" => Order::tableColumns()]);
+        });
+    });
+
+    Route::prefix("products")->group(function () {
+        Route::get('/', function () {
+            return view('products', ["categories" => Category::all(), "subcategories" => Subcategory::all(), "rows" => Product::all()->toArray(), "table" => Product::tableName(), "columns" => Product::tableColumns()]);
+        });
+        Route::post('/', [ProductController::class, "store"]);
+        Route::post('/edit/{id}', [ProductController::class, "edit"])->where('id', '[0-9]+');
+    });
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix("products")->group(function () {
-    Route::get('/', function () {
-        return view('products', ["categories"=>Category::all(),"subcategories"=>Subcategory::all(),"rows" => Product::all()->toArray(), "table" => Product::tableName(), "columns" => Product::tableColumns()]);
-    });
-    Route::post('/', [ProductController::class, "store"]);
-    Route::post('/edit/{id}', [ProductController::class, "edit"])->where('id', '[0-9]+');
-});
+require __DIR__ . '/auth.php';

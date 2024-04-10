@@ -12,7 +12,7 @@
 
 <body>
     <nav class="container-lg navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">OS-OPT - {{ $table }}</a>
+        <a class="navbar-brand" href="/">OS-OPT - {{ Auth::user()->name }}</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
             aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -30,6 +30,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/subcategories">Подкатегории</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Выйти</a>
                 </li>
             </ul>
         </div>
