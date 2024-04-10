@@ -42,10 +42,15 @@
                             <input name="name" value="{{ $row['name'] }}" class="default-table-input" type="text">
                         </td>
                         <td class="image-td">
-                            <img class="table-image clickable"
-                                onclick="document.getElementById('image_{{ $row['id'] }}').click()"
-                                src="{{ $row['image'] }}">
-                            <input name="image" type="file" id="image_{{ $row['id'] }}" accept="image/*">
+                            @if ($row['image'])
+                                <img class="table-image clickable"
+                                    onclick="document.getElementById('image_{{ $row['id'] }}').click()"
+                                    src="{{ $row['image'] }}">
+                                <input name="image" type="file" class="d-none" id="image_{{ $row['id'] }}"
+                                    accept="image/*">
+                            @else
+                                <input name="image" type="file" accept="image/*">
+                            @endif
                         </td>
                         <td>
                             <input name="price" value="{{ $row['price'] }}" class="default-table-input" type="text">
@@ -159,12 +164,16 @@
         window.onload = () => {
             let image_columns = document.getElementsByClassName("image-td");
             let selected_image = null;
+
             for (const ic of image_columns) {
                 ic.onclick = () => {
                     if (ic.classList.contains('active')) {
                         selected_image = null;
                         ic.classList.remove('active');
                     } else {
+                        for (const i of image_columns) {
+                            i.classList.remove('active');
+                        }
                         selected_image = ic.querySelector('input');
                         ic.classList.add('active');
                     }

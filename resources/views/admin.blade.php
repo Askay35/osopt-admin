@@ -54,9 +54,6 @@
         .clickable{
             cursor: pointer;
         }
-        table input[type="file"]{
-            display:none;
-        }
         .image-td {
             display: flex;
             gap: 10px;
