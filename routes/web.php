@@ -59,5 +59,5 @@ Route::prefix("products")->group(function () {
         return view('products', ["categories"=>Category::all(),"subcategories"=>Subcategory::all(),"rows" => Product::all()->toArray(), "table" => Product::tableName(), "columns" => Product::tableColumns()]);
     });
     Route::post('/', [ProductController::class, "store"]);
-    Route::post('/edit/{id}', [AdminPageController::class, "edit"])->where('id', '[0-9]+');
+    Route::post('/edit/{id}', [ProductController::class, "edit"])->where('id', '[0-9]+');
 });

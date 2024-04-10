@@ -39,50 +39,43 @@
         <button type="button" class="btn btn-primary btn" data-bs-toggle="modal" data-bs-target="#modelId">
             Добавить
         </button>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    @foreach ($columns as $column)
-                        <th>{{ $column }}</th>
-                    @endforeach
-                    <th>Управление</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($rows as $row)
-                    <form action="{{ '/' . $table . '/edit/' . $row['id'] }}" method="post">
-                        @csrf
-                        <input type="hidden" name="table" value="{{ $table }}">
-                        <tr>
-                            @foreach ($row as $k => $column)
-                                @if ($k == 'image')
-                                <td class="image-td">
-                                    <img src="{{$column}}">
-                                    <input name="{{ $k }}" type="file" accept="image/*">
-                                </td>
-                                @else
-                                <td>
-                                    <input name="{{ $k }}" value="{{ $column }}" type="text">
-                                </td>
-                                @endif
-                            @endforeach
-                            <td>
-                                <input type="submit" name="save" value="Сохранить">
-                                <input type="submit" name="delete" value="Удалить">
-                            </td>
-                        </tr>
-                    </form>
-                @endforeach
-            </tbody>
-        </table>
+        @yield('table')
     </main>
     <style>
+        .table-image {
+            height: 50px;
+        }
+        table {
+            overflow: scroll;
+        }
+        .default-table-input{
+            width:150px;
+        }
+        .clickable{
+            cursor: pointer;
+        }
+        table input[type="file"]{
+            display:none;
+        }
+        .image-td {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-td.active{
+            border:1px solid rgb(20, 149, 255);
+        }
         table input {
             border: 0;
         }
-        .form-group{
-            margin-bottom:20px;
+        .form-group {
+            margin-bottom: 20px;
+        }
+        @media (max-width:992px){
+            table{
+                display: block;
+            }
         }
     </style>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>

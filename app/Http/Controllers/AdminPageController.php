@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\DB;
 class AdminPageController extends Controller
 {
 
-    public function edit(Request $request)
+    public function edit(Request $request, $id)
     {
         $data = $request->all();
-        $item = DB::table($data['table'])->where('id',$data['id']);
+        $item = DB::table($data['table'])->where('id',$id);
         if (isset($data['delete'])) {
             $item->delete();
             return redirect()->back();
