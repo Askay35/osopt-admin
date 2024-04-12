@@ -14,6 +14,7 @@
             </tr>
         </thead>
         <tbody>
+	@if(count($rows)>0)
             @foreach ($rows as $row)
                 <form enctype="multipart/form-data" action="{{ '/' . $table . '/edit/' . $row['id'] }}" method="post">
                     @csrf
@@ -66,6 +67,7 @@
                     </tr>
                 </form>
             @endforeach
+	@endif
         </tbody>
     </table>
 @endsection
@@ -87,7 +89,7 @@
                                 <select required name="category_id" class="c_select" data-sc="#sc_select_add"
                                     oninput="categoryChanged(this)">
                                     @foreach ($categories as $category)
-                                        <option @if ($category->id == $row['category_id']) selected @endif
+                                        <option
                                             value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
@@ -96,8 +98,7 @@
                                 <label>Подкатегория</label>
                                 <select required name="subcategory_id" id="sc_select_add">
                                     @foreach ($subcategories as $subcategory)
-                                        <option @if ($subcategory->id == $row['subcategory_id']) selected @endif
-                                            data-cid="{{ $subcategory->category_id }}" value="{{ $subcategory->id }}">
+                                        <option data-cid="{{ $subcategory->category_id }}" value="{{ $subcategory->id }}">
                                             {{ $subcategory->name }}</option>
                                     @endforeach
                                 </select>
@@ -108,7 +109,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Изображение</label>
-                                <input type="file" id="add_file_input" accept="image/*" class="form-control"
+                                <input type="file" required id="add_file_input" accept="image/*" class="form-control"
                                     name="image">
                             </div>
                             <div class="form-group">

@@ -43,10 +43,12 @@ class ProductController extends Controller
         $data['price'] = floatval($data['price']);
         $product = Product::create($data);
         $image = $request->file('image');
-        $image_name = time() . '_' . uuid_create() . "." . $image->getClientOriginalExtension();
-        $image_path = "/storage/products/" . $image_name;
-        $image->storePubliclyAs("/public/products/", $image_name);
-        $product->image = $image_path;
+        if($image){
+            $image_name = time() . '_' . uuid_create() . "." . $image->getClientOriginalExtension();
+            $image_path = "/storage/products/" . $image_name;
+            $image->storePubliclyAs("/public/products/", $image_name);
+            $product->image = $image_path;
+        }
         $product->save();
 
         return redirect()->back();
