@@ -1,47 +1,42 @@
 @extends('admin')
 
 @section('table')
-<table class="table">
-    <thead>
-        <tr>
-            @foreach ($columns as $column)
-                <th>{{ $column }}</th>
-            @endforeach
-            <th>Управление</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($rows as $row)
-            <form action="{{ '/' . $table . '/edit/' . $row['id'] }}" method="post">
-                @csrf
-                <input type="hidden" name="table" value="{{ $table }}">
-                <tr>
-                    @foreach ($row as $k => $column)
-                        @if ($k == 'image')
-                        <td class="image-td">
-                            <img class="table-image" src="{{$column}}">
-                            <input name="{{ $k }}" type="file" accept="image/*">
-                        </td>
-                        @else
-                        <td>
-                            <input name="{{ $k }}" value="{{ $column }}" type="text">
-                        </td>
-                        @endif
-                    @endforeach
-                    <td>
-                        <input type="submit" name="save" value="Сохранить">
-                        <input type="submit" name="delete" value="Удалить">
-                    </td>
-                </tr>
-            </form>
-        @endforeach
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Название</th>
+                <th>Управление</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (count($rows) > 0)
+                @foreach ($rows as $row)
+                    <form action="{{ '/' . $table . '/edit/' . $row->id }}" method="post">
+                        @csrf
+                        <input type="hidden" name="table" value="{{ $table }}">
+                        <tr>
+                            <td>
+                                <input name="id" required value="{{ $row->id }}" type="text">
+                            </td>
+                            <td>
+                                <input name="name" required value="{{ $row->name }}" type="text">
+                            </td>
+                            <td>
+                                <input type="submit" name="save" value="Сохранить">
+                                <input type="submit" name="delete" value="Удалить">
+                            </td>
+                        </tr>
+                    </form>
+                @endforeach
+            @endif
+        </tbody>
+    </table>
 @endsection
 
 @section('modal')
-<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-        aria-hidden="true">
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form class="container-fluid" enctype="multipart/form-data" action="{{ "/$table" }}" method="post">
@@ -51,21 +46,10 @@
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
-                            @foreach ($columns as $column)
-                                @if ($column == 'image')
-                                    <div class="form-group mt-2">
-                                        <label>{{ $column }}</label>
-                                        <input type="file" id="add_file_input" accept="image/*" class="form-control"
-                                            name="{{ $column }}">
-                                    </div>
-                                @elseif ($column != 'id')
-                                    <div class="form-group mt-2">
-                                        <label>{{ $column }}</label>
-                                        <input type="text" class="form-control" name="{{ $column }}"
-                                            placeholder>
-                                    </div>
-                                @endif
-                            @endforeach
+                            <div class="form-group mt-2">
+                                <label>Название</label>
+                                <input type="text" required class="form-control" name="name">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

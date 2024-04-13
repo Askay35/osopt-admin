@@ -1,41 +1,47 @@
 @extends('admin')
 @section('table')
-<table class="table">
-    <thead>
-        <tr>
-            @foreach ($columns as $column)
-                <th>{{ $column }}</th>
-            @endforeach
-            <th>Управление</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($rows as $row)
-            <form action="{{ '/' . $table . '/edit/' . $row['id'] }}" method="post">
-                @csrf
-                <input type="hidden" name="table" value="{{ $table }}">
-                <tr>
-                    @foreach ($row as $k => $column)
-                        @if ($k == 'image')
-                        <td class="image-td">
-                            <img class="table-image" src="{{$column}}">
-                            <input name="{{ $k }}" type="file" accept="image/*">
-                        </td>
-                        @else
-                        <td>
-                            <input name="{{ $k }}" value="{{ $column }}" type="text">
-                        </td>
-                        @endif
-                    @endforeach
-                    <td>
-                        <input type="submit" name="save" value="Сохранить">
-                        <input type="submit" name="delete" value="Удалить">
-                    </td>
-                </tr>
-            </form>
-        @endforeach
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Категория</th>
+                <th>Название</th>
+                <th>Управление</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (count($rows) > 0)
+                @foreach ($rows as $row)
+                    <form action="{{ '/' . $table . '/edit/' . $row->id }}" method="post">
+                        @csrf
+                        <input type="hidden" name="table" value="{{ $table }}">
+                        <tr>
+                            <td>
+                                <input name="id" required value="{{ $row->id }}" type="text">
+                            </td>
+                            <td>
+                                <select oninput="categoryChanged(this)" data-sc="#sc_select_{{ $row->id }}"
+                                    name="category_id" class="c_select">
+                                    @foreach ($categories as $category)
+                                        <option @if ($category->id == $row->category_id) selected @endif
+                                            value="{{ $category->id }}">
+                                            {{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <input name="name" required value="{{ $row->name }}" type="text">
+                            </td>
+                            <td>
+                                <input type="submit" name="save" value="Сохранить">
+                                <input type="submit" name="delete" value="Удалить">
+                            </td>
+                        </tr>
+                    </form>
+                @endforeach
+            @endif
+        </tbody>
+    </table>
 @endsection
 
 @section('modal')
@@ -53,7 +59,7 @@
                                 <label>Категория</label>
                                 <select name="category_id">
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>                                        
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

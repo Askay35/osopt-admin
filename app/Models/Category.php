@@ -8,25 +8,13 @@ class Category extends BaseModel
 
     public $timestamps = false;
     protected $fillable = [
-        "category_id",
-        "subcategory_id",
+        "id",
         "name",
-        "desc",
-        "price",
-        "weight",
-        "count",
-        "min_order_price",
-        "in_stock"
     ];
 
-    public function subcategory()
+    public function subcategories()
     {
-        return $this->belongsTo(Subcategory::class);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(Subcategory::class);
     }
 
 }

@@ -17,6 +17,7 @@ return [
 
     'default' => env('DB_CONNECTION', 'mysql'),
 
+    'per_page' => 30,
     /*
     |--------------------------------------------------------------------------
     | Database Connections
