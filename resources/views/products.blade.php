@@ -9,6 +9,7 @@
                 <th>Название</th>
                 <th>Изображение</th>
                 <th>Цена</th>
+                <th>В упаковке</th>
                 <th>В наличии</th>
                 <th>Управление</th>
             </tr>
@@ -41,7 +42,7 @@
                             </td>
 
                             <td>
-                                <input name="name" value="{{ $row['name'] }}" class="default-table-input"
+                                <input name="name" required value="{{ $row['name'] }}" class="default-table-input"
                                     type="text">
                             </td>
                             <td class="image-td">
@@ -52,15 +53,18 @@
                                     <input name="image" type="file" class="d-none" id="image_{{ $row->id }}"
                                         accept="image/*">
                                 @else
-                                    <input name="image" type="file" accept="image/*">
+                                    <input name="image" required type="file" accept="image/*">
                                 @endif
                             </td>
                             <td>
-                                <input name="price" value="{{ $row['price'] }}" class="default-table-input"
+                                <input name="price" required value="{{ $row['price'] }}" class="default-table-input"
                                     type="text">
                             </td>
                             <td>
-                                <input name="in_stock" value="{{ $row['in_stock'] }}" class="default-table-input"
+                                <input name="count" value="{{ $row['count'] }}" class="default-table-input" type="number">
+                            </td>
+                            <td>
+                                <input name="in_stock" required value="{{ $row['in_stock'] }}" class="default-table-input"
                                     maxlength="1" type="text">
                             </td>
                             <td>
