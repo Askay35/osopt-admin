@@ -121,6 +121,7 @@
                             <div class="form-group">
                                 <label>Бренд</label>
                                 <select name="brand_id" class="form-control">
+                                    <option selected value="0">Не указан</option>
                                     @foreach ($brands as $brand)
                                         <option value="{{ $brand->id }}">
                                             {{ $brand->name }}</option>
