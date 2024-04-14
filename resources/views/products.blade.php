@@ -6,6 +6,7 @@
             <tr>
                 <th>Категория</th>
                 <th>Подкатегория</th>
+                <th>Бренд</th>
                 <th>Название</th>
                 <th>Изображение</th>
                 <th>Цена</th>
@@ -23,7 +24,7 @@
                         <tr>
                             <td>
                                 <select oninput="categoryChanged(this)" data-sc="#sc_select_{{ $row->id }}"
-                                    name="category_id" class="c_select">
+                                    name="category_id" class="c_select form-control">
                                     @foreach ($categories as $category)
                                         <option @if ($category->id == $row->category_id) selected @endif
                                             value="{{ $category->id }}">
@@ -32,7 +33,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select name="subcategory_id" id="sc_select_{{ $row->id }}">
+                                <select name="subcategory_id" class="form-control" id="sc_select_{{ $row->id }}">
                                     @foreach ($subcategories as $subcategory)
                                         <option @if ($subcategory->id == $row['subcategory_id']) selected @endif
                                             data-cid="{{ $subcategory->category_id }}" value="{{ $subcategory->id }}">
@@ -40,7 +41,15 @@
                                     @endforeach
                                 </select>
                             </td>
-
+                            <td>
+                                <select name="brand_id" class="form-control">
+                                    <option selected value="0">Не указан</option>
+                                    @foreach ($brands as $brand)
+                                        <option @if ($brand->id == $row['brand_id']) selected @endif value="{{ $brand->id }}">
+                                            {{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
                             <td>
                                 <input name="name" required value="{{ $row['name'] }}" class="default-table-input"
                                     type="text">
@@ -68,8 +77,8 @@
                                     maxlength="1" type="text">
                             </td>
                             <td>
-                                <input type="submit" name="save" value="Сохранить">
-                                <input type="submit" name="delete" value="Удалить">
+                                <input type="submit" class="p-2 rounded-2 bg-primary text-white" name="save" value="Сохранить">
+                                <input type="submit" class="p-2 rounded-2 bg-danger text-white" name="delete" value="Удалить">
                             </td>
                         </tr>
                     </form>
@@ -93,7 +102,7 @@
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label>Категория</label>
-                                <select required name="category_id" class="c_select" data-sc="#sc_select_add"
+                                <select required name="category_id" class="c_select form-control" data-sc="#sc_select_add"
                                     oninput="categoryChanged(this)">
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -102,10 +111,19 @@
                             </div>
                             <div class="form-group">
                                 <label>Подкатегория</label>
-                                <select required name="subcategory_id" id="sc_select_add">
+                                <select required name="subcategory_id" class="form-control" id="sc_select_add">
                                     @foreach ($subcategories as $subcategory)
                                         <option data-cid="{{ $subcategory->category_id }}" value="{{ $subcategory->id }}">
                                             {{ $subcategory->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Бренд</label>
+                                <select name="brand_id" class="form-control">
+                                    @foreach ($brands as $brand)
+                                        <option value="{{ $brand->id }}">
+                                            {{ $brand->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

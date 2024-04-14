@@ -5,11 +5,9 @@
         <thead>
             <tr>
                 <th>Название</th>
-                <th>Управление</th>
             </tr>
         </thead>
         <tbody>
-
             @if (count($rows) > 0)
                 @foreach ($rows as $row)
                     <form action="{{ '/' . $table . '/edit/' . $row->id }}" method="post">
@@ -17,7 +15,8 @@
                         <input type="hidden" name="table" value="{{ $table }}">
                         <tr>
                             <td>
-                                <input name="name" required value="{{ $row->name }}" type="text">
+                                <input name="name" required value="{{ $row['name'] }}" class="default-table-input"
+                                    type="text">
                             </td>
                             <td>
                                 <input type="submit" class="p-2 rounded-2 bg-primary text-white" name="save" value="Сохранить">
@@ -31,20 +30,21 @@
     </table>
 @endsection
 
+
 @section('modal')
     <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="container-fluid" enctype="multipart/form-data" action="{{ "/$table" }}" method="post">
+                <form class="container-fluid" action="{{ "/$table" }}" method="post">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title">Добавить элемент</h5>
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
-                            <div class="form-group mt-2">
+                            <div class="form-group">
                                 <label>Название</label>
-                                <input type="text" required class="form-control" name="name">
+                                <input type="text" required name="name">
                             </div>
                         </div>
                     </div>
@@ -56,4 +56,5 @@
             </div>
         </div>
     </div>
+    
 @endsection

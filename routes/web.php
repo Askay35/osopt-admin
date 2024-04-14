@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/', [TableController::class,"categories"]);
+    Route::get('/', [TableController::class,"categories"])->name('categories');
 
     Route::prefix("categories")->group(function () {
         Route::post('/', [TableController::class, "create_category"]);
@@ -28,17 +28,24 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix("subcategories")->group(function () {
 
-        Route::get('/', [TableController::class, "subcategories"]);
+        Route::get('/', [TableController::class, "subcategories"])->name('subcategories');
         Route::post('/', [TableController::class, "create_subcategory"]);
         Route::post('/edit/{id}', [AdminPageController::class, "edit"])->where('id', '[0-9]+');
     });
     Route::prefix("orders")->group(function () {
 
-        Route::get('/', [TableController::class, "orders"]);
+        Route::get('/', [TableController::class, "orders"])->name('orders');
+    });
+
+    Route::prefix('brands')->group(function () {
+        Route::get('/', [TableController::class, "brands"])->name('brands');
+        Route::post('/', [TableController::class, "create_brand"]);
+        Route::post('/edit/{id}', [AdminPageController::class, "edit"])->where('id', '[0-9]+');
+    
     });
 
     Route::prefix("products")->group(function () {
-        Route::get('/', [TableController::class, "products"]);
+        Route::get('/', [TableController::class, "products"])->name('products');
         Route::post('/', [ProductController::class, "store"]);
         Route::post('/edit/{id}', [ProductController::class, "edit"])->where('id', '[0-9]+');
     });

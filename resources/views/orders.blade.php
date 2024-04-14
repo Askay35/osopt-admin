@@ -38,8 +38,8 @@
                                 <input name="status_id" value="{{$row->status_id}}" required type="text">
                             </td>
                             <td>
-                                <input type="submit" name="save" value="Сохранить">
-                                <input type="submit" name="delete" value="Удалить">
+                                <input type="submit" class="p-2 rounded-2 bg-primary text-white" name="save" value="Сохранить">
+                                <input type="submit" class="p-2 rounded-2 bg-danger text-white" name="delete" value="Удалить">
                             </td>
                         </tr>
                     </form>

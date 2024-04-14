@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -22,6 +21,9 @@ class ProductController extends Controller
         $item->name = $data['name'];
         $item->category_id = intval($data['category_id']);
         $item->subcategory_id = intval($data['subcategory_id']);
+        if($data['brand_id']){
+            $item->brand_id = intval($data['brand_id']);
+        }
         $item->count = $data['count'];
         $item->in_stock = intval($data['in_stock']);
 

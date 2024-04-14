@@ -20,16 +20,19 @@
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/products">Продукты</a>
+                    <a class="nav-link {{ Route::is('products') ? "active" : "" }}" href="/products">Продукты</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/orders">Заказы</a>
+                    <a class="nav-link {{ Route::is('orders') ? "active" : "" }}" href="/orders">Заказы</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Категории</a>
+                    <a class="nav-link {{ Route::is('') ? "active" : "" }}" href="/">Категории</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/subcategories">Подкатегории</a>
+                    <a class="nav-link {{ Route::is('subcategories') ? "active" : "" }}" href="/subcategories">Подкатегории</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('brands') ? "active" : "" }}" href="/brands">Бренды</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Выйти</a>
@@ -39,7 +42,7 @@
     </nav>
     @yield('modal')
     <main class="container-lg py-5 d-flex flex-column align-items-end">
-        <button type="button" class="btn btn-primary btn" data-bs-toggle="modal" data-bs-target="#modelId">
+        <button type="button" class="btn btn-success btn" data-bs-toggle="modal" data-bs-target="#modelId">
             Добавить
         </button>
         @yield('table')

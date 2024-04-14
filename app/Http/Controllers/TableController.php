@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
@@ -18,8 +19,15 @@ class TableController extends Controller
         Category::create(["name" => $request->post('name')]);
         return redirect()->back();
     }
+    public function create_brand(Request $request){
+        Brand::create(["name" => $request->post('name')]);
+        return redirect()->back();
+    }
     public function subcategories(){
         return view('subcategories', ["categories" => Category::all(), "rows" => Subcategory::paginate(config('database.per_page')), "table" => Subcategory::tableName(), "columns" => Subcategory::tableColumns()]);
+    }
+    public function brands(){
+        return view('brands', ["rows" => Brand::paginate(config('database.per_page')), "table" => Brand::tableName()]);
     }
     public function create_subcategory(){
         $data = request()->post();
@@ -36,6 +44,6 @@ class TableController extends Controller
         return view('orders', ["rows" => Order::paginate(config('database.per_page')), "table" => Order::tableName(), "columns" => Order::tableColumns()]);
     }
     public function products(){
-        return view('products', ["categories" => Category::all(), "subcategories" => Subcategory::all(), "rows" => Product::paginate(config('database.per_page')), "table" => Product::tableName(), "columns" => Product::tableColumns()]);
+        return view('products', ["categories" => Category::all(), "subcategories" => Subcategory::all(), "brands" => Brand::all(), "rows" => Product::paginate(config('database.per_page')), "table" => Product::tableName(), "columns" => Product::tableColumns()]);
     }
 }

@@ -3,7 +3,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>id</th>
                 <th>Категория</th>
                 <th>Название</th>
                 <th>Управление</th>
@@ -17,11 +16,8 @@
                         <input type="hidden" name="table" value="{{ $table }}">
                         <tr>
                             <td>
-                                <input name="id" required value="{{ $row->id }}" type="text">
-                            </td>
-                            <td>
                                 <select oninput="categoryChanged(this)" data-sc="#sc_select_{{ $row->id }}"
-                                    name="category_id" class="c_select">
+                                    name="category_id" class="form-control c_select">
                                     @foreach ($categories as $category)
                                         <option @if ($category->id == $row->category_id) selected @endif
                                             value="{{ $category->id }}">
@@ -33,8 +29,8 @@
                                 <input name="name" required value="{{ $row->name }}" type="text">
                             </td>
                             <td>
-                                <input type="submit" name="save" value="Сохранить">
-                                <input type="submit" name="delete" value="Удалить">
+                                <input type="submit" class="p-2 rounded-2 bg-primary text-white" name="save" value="Сохранить">
+                                <input type="submit" class="p-2 rounded-2 bg-danger text-white" name="delete" value="Удалить">
                             </td>
                         </tr>
                     </form>
@@ -57,7 +53,7 @@
                         <div class="container-fluid">
                             <div class="form-group">
                                 <label>Категория</label>
-                                <select name="category_id">
+                                <select name="category_id" class="form-control">
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
