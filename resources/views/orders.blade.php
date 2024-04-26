@@ -7,9 +7,6 @@
                     Контакт
                 </th>
                 <th>
-                    Пользователь
-                </th>
-                <th>
                     Тип оплаты
                 </th>
                 <th>
@@ -27,9 +24,6 @@
                         <tr>
                             <td>
                                 <input name="phone" value="{{$row->phone}}" required type="text">
-                            </td>
-                            <td>
-                                <input name="user_id" value="{{$row->user_id}}" type="text">
                             </td>
                             <td>
                                 <input name="payment_type" value="{{$row->payment_type}}" required type="text">
